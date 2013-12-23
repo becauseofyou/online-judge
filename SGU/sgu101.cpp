@@ -33,7 +33,7 @@ int main() {
   for(int i = 0, a, b; i < n; i++) {
     scanf("%d%d",&a,&b);
     add(a, b, i+1);
-    in[a]++;
+    in[a]++; 
     in[b]++;
     start = a;
   }
