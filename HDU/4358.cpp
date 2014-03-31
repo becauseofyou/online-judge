@@ -3,7 +3,7 @@
 #include <queue>
 #include <algorithm>
 #include <cstring>
-const int N = 200010;
+const int N = 100010;
 
 struct Node;
 Node* null;
@@ -105,18 +105,23 @@ void merge(Node *&A, Node *B) { // merge tree_B to  tree_A
     }
 }
 
-int firstEdge[N], nextEdge[N*2], pointTo[N*2];
-int totEdge, ans[N], col[N], n;
 
-void addEdge(int a,int b) {
-    pointTo[totEdge] = b;
-    nextEdge[totEdge] = firstEdge[a];
-    firstEdge[a] = totEdge ++;
+struct Edge {
+    int v;
+    Edge *next;
+}ee[N*2], *E;
+Edge *list[N];
+void addEdge(int a, int b) {
+    Edge *e = new(E++)Edge();
+    e->v = b;
+    e->next = list[a];
+    list[a] = e;
 }
+int ans[N], col[N], n;
 
 void dfs(int u,int f) {
-    for(int iter = firstEdge[u]; iter != -1; iter = nextEdge[iter]) {
-        int v = pointTo[iter];
+    for(Edge *e = list[u]; e; e = e->next) {
+        int v = e->v;
         if(v == f) continue;
         dfs(v, u);
         merge(root[u], root[v]);
@@ -125,11 +130,10 @@ void dfs(int u,int f) {
 }
 
 void init() {
-    C = pool;
+    C = pool; E = ee;
     null = new (C++)Node();
-    totEdge = 0;
-    std::fill(firstEdge, firstEdge + n, -1);
     for(int i = 0; i < n; i++) {
+        list[i] = NULL;
         scanf("%d",&col[i]);
     }
     for(int i = 0; i < n; i++) { 
@@ -164,4 +168,3 @@ int main() {
     }
     return 0;
 }
-
