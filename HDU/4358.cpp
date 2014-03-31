@@ -44,13 +44,13 @@ struct Node {
 
 Node* root[N];
 
+/*
+ * 从高到低依次修改
+ */
 void rot(Node *x) {
     Node *p = x->p;
     int f = x->d();
     std::swap(x->isRoot, p->isRoot);
-    /*
-     * 从高到低依次修改
-     */
     p->p->setc(p->d(), x);
     p->setc(f, x->c[!f]);
     x->setc(!f, p);
@@ -135,7 +135,7 @@ void init() {
     for(int i = 0; i < n; i++) { 
         root[i] = new (C++) Node(1, 1, 1, col[i]);
         root[i]->up();
-//        debug(root[i]);
+        //        debug(root[i]);
     }
 }
 
