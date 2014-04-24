@@ -36,7 +36,7 @@ struct Tree {
         rson->insert(i, val);
         pushup();
     }
-}*tree;
+} *tree;
 int main() {
     int M, D, last = 0, end = 0, x;
     char op[10];
